@@ -6,14 +6,22 @@ TagManager:
   tags:
   - Goal
   - Obstacle
+  - Wall
+  - RespawnPoint
+  - Checkpoint
+  - EnemySpawner
+  - Enemy
+  - DeadlyObstacle
+  - RotatingObstacle
+  - WinPoint
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
+  - Obstacles
   - 
   - 
   - 

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
@@ -10,7 +10,7 @@ public class Obstacle : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        // Khởi tạo có thể thêm code tại đây nếu cần
     }
 
     // Update is called once per frame
