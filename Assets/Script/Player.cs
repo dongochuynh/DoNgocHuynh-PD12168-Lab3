@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
 
-        // Nếu chưa đặt checkpoint, lấy vị trí ban đầu làm respawn
         if (respawnPoint == null)
         {
             respawnPoint = transform;
@@ -51,7 +50,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Obstacle") ||
             collision.gameObject.CompareTag("DeadlyObstacle") ||
-            collision.gameObject.CompareTag("RotatingObstacle")) // Chết khi chạm vật xoay
+            collision.gameObject.CompareTag("RotatingObstacle"))
         {
             Die();
         }
@@ -65,11 +64,26 @@ public class Player : MonoBehaviour
         }
         else if (other.CompareTag("Checkpoint"))
         {
-            respawnPoint = other.transform; // Cập nhật điểm hồi sinh
+            respawnPoint = other.transform;
         }
-        else if (other.CompareTag("WinPoint")) // Điểm chiến thắng
+        else if (other.CompareTag("WinPoint"))
         {
-            SceneManager.LoadScene("WinScene"); // Chuyển sang màn Win
+            LoadNextScene();
+        }
+    }
+
+    void LoadNextScene()
+    {
+        int currentIndex = SceneManager.GetActiveScene().buildIndex;
+        int totalScenes = SceneManager.sceneCountInBuildSettings;
+
+        if (currentIndex < totalScenes - 1)
+        {
+            SceneManager.LoadScene(currentIndex + 1);
+        }
+        else
+        {
+            Debug.Log("🎉 Đã đến scene cuối cùng!");
         }
     }
 
@@ -90,15 +104,12 @@ public class Player : MonoBehaviour
             Instantiate(dieEffect, transform.position, Quaternion.identity);
         }
 
-        // Xóa toàn bộ kẻ địch cũ
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             Destroy(enemy);
         }
 
         gameObject.SetActive(false);
-
-        // Hồi sinh sau 2 giây
         Invoke(nameof(Respawn), respawnDelay);
     }
 
@@ -106,16 +117,14 @@ public class Player : MonoBehaviour
     {
         isDead = false;
         gameObject.SetActive(true);
-        transform.position = respawnPoint.position; // Hồi sinh tại checkpoint
+        transform.position = respawnPoint.position;
     }
 
-    // Nút chơi lại
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    // Nút quay lại menu
     public void GoToMenu()
     {
         SceneManager.LoadScene("MainMenu");
