@@ -3,25 +3,23 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuUI : MonoBehaviour
 {
-    public GameObject panelMenu; // Gán Panel chứa menu vào đây
+    public GameObject panelMenu;         // Panel menu chính
+    public GameObject panelLevelSelect;  // Panel chọn level (gán trong Inspector)
 
     public void PlayGame()
     {
-        panelMenu.SetActive(false); // Ẩn menu UI
+        panelMenu.SetActive(false);
 
-        // Nếu muốn chuyển sang level đầu tiên:
-        // SceneManager.LoadScene("Scene 1");
-
-        // Hoặc đơn giản là reset lại vị trí player, cho chơi luôn trong scene này
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {
-            player.GetComponent<Player>().enabled = true; // Bật script Player nếu đang bị tắt
+            player.GetComponent<Player>().enabled = true;
         }
     }
 
     public void ShowLevelSelect()
     {
-        // code hiện panel chọn level nếu cần
+        panelMenu.SetActive(false);            // Ẩn menu chính (nếu cần)
+        panelLevelSelect.SetActive(true);      // Hiện panel chọn level
     }
 }
